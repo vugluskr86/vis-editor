@@ -22,7 +22,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.editor.ui.SearchField;
 import com.kotcrab.vis.editor.ui.tab.CloseTabWhenMovingResources;
@@ -45,7 +47,7 @@ public class TextureAtlasViewTab extends Tab implements CloseTabWhenMovingResour
 	private String name;
 
 	private VisTable contentTable;
-	private VisTable contentTableWrapper;
+	private WidgetGroup contentTableWrapper;
 	private Array<AtlasItem> items = new Array<>();
 	private GridGroup filesView;
 	private VisTable atlasTable;
@@ -119,7 +121,7 @@ public class TextureAtlasViewTab extends Tab implements CloseTabWhenMovingResour
 		contentTable.add(topTable).expandX().fillX().pad(3).row();
 		contentTable.addSeparator().pad(0);
 
-		contentTableWrapper = new VisTable();
+		contentTableWrapper = new WidgetGroup();
 		contentTable.add(contentTableWrapper).expand().fill();
 
 		addRegions(relativeAtlasPath, atlas, isSplit.isChecked());
@@ -134,9 +136,9 @@ public class TextureAtlasViewTab extends Tab implements CloseTabWhenMovingResour
 		scrollPane.setScrollingDisabled(true, false);
 		scrollPane.setFillParent(true);
 		if (isSplit) {
-			contentTableWrapper.add(scrollPane).left();
+			contentTableWrapper.addActor(scrollPane);
 		} else {
-			contentTableWrapper.add(scrollPane);
+			contentTableWrapper.addActor(scrollPane);
 		}
 	}
 
