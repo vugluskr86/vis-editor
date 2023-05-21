@@ -25,6 +25,8 @@ import com.kotcrab.vis.runtime.util.autotable.ATEnumProperty;
 import com.kotcrab.vis.runtime.util.autotable.ATProperty;
 import com.kotcrab.vis.runtime.util.autotable.ATUseGetterSetter;
 
+import java.lang.reflect.Array;
+
 /**
  * Entities having this component are using sprite animations. When exported from VisEditor this is used to together
  * with {@link VisSprite} and {@link SpriteAnimationUpdateSystem} to update {@link VisSprite} region according to actove
@@ -132,13 +134,15 @@ public class VisSpriteAnimation extends Component {
 	}
 
 	public TextureRegion getKeyFrame () {
-		if (animation.getKeyFrames().length == 0) return null;
+		Object[] frames = animation.getKeyFrames();
+		if (frames.length == 0) return null;
 		if (timer <= 0) return animation.getKeyFrames()[0];
 		return animation.getKeyFrame(timer);
 	}
 
 	public TextureRegion getKeyFrame (boolean looping) {
-		if (animation.getKeyFrames().length == 0) return null;
+		Object[] frames = animation.getKeyFrames();
+		if (frames.length == 0) return null;
 		if (timer <= 0) return animation.getKeyFrames()[0];
 		return animation.getKeyFrame(timer, looping);
 	}

@@ -35,7 +35,7 @@ public class AtlasItem extends Table {
 	private String relativeAtlasPath;
 	private AtlasRegion region;
 
-	public AtlasItem (String relativeAtlasPath, AtlasRegion region) {
+	public AtlasItem (String relativeAtlasPath, AtlasRegion region, boolean showLabel) {
 		super(VisUI.getSkin());
 		this.relativeAtlasPath = relativeAtlasPath;
 		this.region = region;
@@ -49,10 +49,12 @@ public class AtlasItem extends Table {
 		img.setScaling(Scaling.fit);
 		add(img).expand().fill().row();
 
-		VisLabel name = new VisLabel(region.name, "small");
-		name.setWrap(true);
-		name.setAlignment(Align.center);
-		add(name).expandX().fillX();
+		if (showLabel) {
+			VisLabel name = new VisLabel(region.name, "small");
+			name.setWrap(true);
+			name.setAlignment(Align.center);
+			add(name).expandX().fillX();
+		}
 	}
 
 	public AtlasRegionAsset getAtlasAsset () {
