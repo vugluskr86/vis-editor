@@ -151,7 +151,7 @@ public class TextureAtlasViewTab extends Tab implements CloseTabWhenMovingResour
 		if (isSplit) {
 			int index = 0;
 			for (AtlasRegion region : regions) {
-				AtlasItem item = new AtlasItem(relativeAtlasPath, region, false);
+				AtlasItem item = new AtlasItem(relativeAtlasPath, region, false, false);
 				items.add(item);
 				atlasTable.add(item)
 						.width(item.getRegion().originalWidth)
@@ -164,7 +164,7 @@ public class TextureAtlasViewTab extends Tab implements CloseTabWhenMovingResour
 			}
 		} else {
 			for (AtlasRegion region : regions) {
-				AtlasItem item = new AtlasItem(relativeAtlasPath, region, false);
+				AtlasItem item = new AtlasItem(relativeAtlasPath, region, false, false);
 				items.add(item);
 				filesView.addActor(item);
 			}

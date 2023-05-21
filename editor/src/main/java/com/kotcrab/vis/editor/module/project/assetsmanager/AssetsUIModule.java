@@ -45,6 +45,7 @@ import com.kotcrab.vis.editor.plugin.api.AssetsUIContextGeneratorProvider;
 import com.kotcrab.vis.editor.ui.SearchField;
 import com.kotcrab.vis.editor.ui.dialog.DeleteDialog;
 import com.kotcrab.vis.editor.ui.dialog.EnterPathDialog;
+import com.kotcrab.vis.editor.ui.scene.SceneTab;
 import com.kotcrab.vis.editor.ui.tab.AssetsUsagesTab;
 import com.kotcrab.vis.editor.ui.tab.DeleteMultipleFilesTab;
 import com.kotcrab.vis.editor.ui.tabbedpane.DragAndDropTarget;
@@ -124,6 +125,7 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 	private AssetsTab assetsTab;
 	private AssetDragAndDrop assetDragAndDrop;
 	private AssetsPopupMenu popupMenu;
+	private AssetSelected assetSelected;
 
 	//UI
 	private VisTable mainTable;
@@ -222,6 +224,8 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 				if (atlasTabFile != null) atlasViews.remove(atlasTabFile);
 			}
 		});
+
+		assetSelected = new AssetSelected(projectContainer);
 	}
 
 	private void initUI () {
@@ -267,15 +271,21 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 				if (event.getTarget() == filesView || event.getTarget() == mainFilesView || event.getTarget() == miscFilesView) {
 					popupMenu.build(null);
 				}
-
 				return false;
 			}
+			/*
+			@Override
+			public boolean mouseMoved(InputEvent event, float x, float y) {
+				assetSelected.mouseMoved(event, x, y);
+				return super.mouseMoved(event, x, y);
+			}*/
 		});
 	}
 
 	@Override
 	public void dispose () {
 		assetDragAndDrop.dispose();
+		assetSelected.dispose();
 		tabsModule.removeListener(this);
 		assetsWatcher.removeListener(this);
 		assetsTab.removeFromTabPane();
@@ -562,7 +572,7 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 				quickAccessModule.switchTab(tab);
 
 			assetDragAndDrop.addSources(tab.getItems());
-
+			assetSelected.addSources(tab.getItems());
 			return;
 		}
 	}
@@ -595,6 +605,7 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 		if (tab instanceof DragAndDropTarget) {
 			assetDragAndDrop.setDropTarget((DragAndDropTarget) tab);
 			assetDragAndDrop.rebuild(mainFilesView.getChildren(), miscFilesView.getChildren(), atlasViews.values());
+			assetSelected.addTargetTab(tab);
 		} else
 			assetDragAndDrop.clear();
 	}
@@ -841,7 +852,9 @@ public class AssetsUIModule extends ProjectModule implements WatchListener, VisT
 			selectedFiles.removeValue(fileItem, true);
 			fileItem.setSelected(false);
 		} else {
-			if (contains == false) selectedFiles.add(fileItem);
+			if (contains == false) {
+				selectedFiles.add(fileItem);
+			}
 			fileItem.setSelected(true);
 		}
 	}

@@ -428,4 +428,8 @@ public class SceneTab extends MainContentTab implements DragAndDropTarget, Close
 	public SceneModuleContainer getSceneMC () {
 		return sceneMC;
 	}
+
+	public Stage getStage() { return stage; }
+
+	public EntityManipulatorModule getEntityManipulator() { return entityManipulator; }
 }

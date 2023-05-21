@@ -46,15 +46,17 @@ public class AtlasItem extends Table {
 	private String relativeAtlasPath;
 	private AtlasRegion region;
 
-	private ShapeRenderer shapeRenderer;
+	private boolean isShowLabel;
 
+	private ShapeRenderer shapeRenderer;
 	private boolean isSelected;
 
-	public AtlasItem (String relativeAtlasPath, AtlasRegion region, boolean showLabel) {
+
+	public AtlasItem (String relativeAtlasPath, AtlasRegion region, boolean isShowLabel, boolean isPreventSelect) {
 		super(VisUI.getSkin());
 		this.relativeAtlasPath = relativeAtlasPath;
 		this.region = region;
-
+		this.isShowLabel = isShowLabel;
 		isSelected = false;
 		shapeRenderer = new ShapeRenderer();
 		assetDescriptor = new AtlasRegionAsset(relativeAtlasPath, region.name);
@@ -66,19 +68,20 @@ public class AtlasItem extends Table {
 		img.setScaling(Scaling.fit);
 		add(img).expand().fill().row();
 
-		if (showLabel) {
+		if (isShowLabel) {
 			VisLabel name = new VisLabel(region.name, "small");
 			name.setWrap(true);
 			name.setAlignment(Align.center);
 			add(name).expandX().fillX();
 		}
-
-		addListener(new ClickListener() {
-			@Override
-			public void clicked (InputEvent event, float x, float y) {
-				isSelected = !isSelected;
-			}
-		});
+		if (!isPreventSelect) {
+			addListener(new ClickListener() {
+				@Override
+				public void clicked (InputEvent event, float x, float y) {
+					isSelected = !isSelected;
+				}
+			});
+		}
 	}
 
 	public AtlasRegionAsset getAtlasAsset () {
@@ -89,9 +92,22 @@ public class AtlasItem extends Table {
 		return region;
 	}
 
+	public String getRelativeAtlasPath() {
+		return relativeAtlasPath;
+	}
+
 	public boolean isSelected() {
 		return isSelected;
 	}
+
+	public boolean isShowLabel() {
+		return isShowLabel;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
 
 	@Override
 	public void draw (Batch batch, float parentAlpha) {
