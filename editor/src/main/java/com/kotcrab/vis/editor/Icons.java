@@ -66,6 +66,7 @@ public enum Icons {
 	TOOL_MOVE("tool-move"),
 	TOOL_ROTATE("tool-rotate"),
 	TOOL_SCALE("tool-scale"),
+	TOOL_PENCIL("pencil-tool"),
 
 	FOLDER_MEDIUM("folder-medium"),
 	FOLDER_SOUND_MEDIUM("folder-sound-medium"),
