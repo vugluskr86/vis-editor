@@ -1,0 +1,16 @@
+1. Sprite painting
+- LMB draw sprite
+- RMB clear sprite
+- Painting with sprite group
+- On scene editor, with RBM pressed use group select sprite
+- On scene editor after RBM click reset select sprite or sprite group
+- On tileset viewer with LBM pressed user group select sprite
+
+2. Display tileset viewer on right screen side (tabs)
+
+3. Layer types (or custom properties)
+- Background, objects, collision, impassable, etc.
+
+4. Load vis scene format
+
+
